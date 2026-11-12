@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
 import { gsap, motionOk } from '@/motion/gsap';
-import { smooth } from '@/motion/smooth';
 import { TLink } from '@/motion/transition';
 import { company, menuGroups } from '@/data/site';
 import { CloseIcon } from '@/components/Icons';
@@ -47,13 +46,11 @@ export function Header() {
     const el = panel.current;
     if (!el) return;
     if (open) {
-      smooth.stop();
       gsap.set(el, { visibility: 'visible' });
       if (motionOk()) tl.current?.timeScale(1).play();
       else tl.current?.progress(1);
       closer.current?.focus();
     } else if (was.current) {
-      smooth.start();
       if (motionOk()) tl.current?.timeScale(1.4).reverse();
       else {
         tl.current?.progress(0);
@@ -75,7 +72,6 @@ export function Header() {
     if (!was.current) return;
     tl.current?.progress(0);
     gsap.set(panel.current, { visibility: 'hidden' });
-    smooth.start();
     was.current = false;
     setOpen(false);
   }, [pathname]);
@@ -118,8 +114,8 @@ export function Header() {
           Close
           <CloseIcon width={14} height={14} />
         </button>
-        <div className="grid gap-8 px-[max(1.25rem,3.5vw)] pb-8 pt-24 min-[900px]:h-full min-[900px]:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] min-[900px]:gap-[4vw] min-[900px]:pr-[max(5rem,9vw)]">
-          <div className="flex flex-col justify-between gap-10 min-[900px]:pt-10">
+        <div className="grid gap-8 px-[max(1.25rem,3.5vw)] pb-8 pt-24 min-[900px]:h-full min-[900px]:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] min-[900px]:grid-rows-[minmax(0,1fr)] min-[900px]:gap-[4vw] min-[900px]:pr-[max(5rem,9vw)]">
+          <div className="flex min-h-0 flex-col justify-between gap-10 min-[900px]:pt-10">
             <nav aria-label="Sections">
               <ul className="m-0 grid list-none gap-1 p-0">
                 {menuGroups.map((g, i) => (
@@ -160,7 +156,7 @@ export function Header() {
               </div>
             </div>
           </div>
-          <div ref={cards} className="relative min-[900px]:h-full">
+          <div ref={cards} className="relative min-h-0 min-[900px]:h-full">
             {menuGroups.map((g, gi) => (
               <div
                 key={g.label}

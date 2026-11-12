@@ -22,7 +22,7 @@ export function Cursor() {
       y(e.clientY);
       const target = e.target instanceof Element ? e.target : null;
       const label = target?.closest<HTMLElement>('[data-cursor]')?.dataset.cursor ?? '';
-      if (label) el.textContent = label;
+      if (label && el.firstElementChild) el.firstElementChild.textContent = label;
       el.toggleAttribute('data-on', label !== '');
       const next = target?.closest('a, button')?.querySelector<HTMLElement>('[data-magnet]') ?? null;
       if (next !== magnet) rest();
@@ -54,10 +54,8 @@ export function Cursor() {
   }, []);
 
   return (
-    <div
-      ref={dot}
-      aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-[80] -ml-10 -mt-10 grid size-20 scale-0 place-items-center rounded-full bg-canvas text-xs font-medium uppercase tracking-[0.14em] text-ink transition-[scale] duration-300 ease-out data-[on]:scale-100"
-    />
+    <div ref={dot} aria-hidden="true" className="group pointer-events-none fixed left-0 top-0 z-[96] -ml-10 -mt-10 size-20">
+      <span className="grid size-full scale-0 place-items-center rounded-full bg-gold text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-ink transition-[scale] duration-300 ease-out group-data-[on]:scale-100" />
+    </div>
   );
 }

@@ -23,6 +23,12 @@
       scale: 1.09;
     }
   }
+  --animate-marquee: marquee 38s linear infinite;
+  @keyframes marquee {
+    to {
+      translate: -50% 0;
+    }
+  }
   --font-sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
@@ -30,9 +36,24 @@
   html {
     background: var(--color-canvas);
     -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gold) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
   }
   body {
     margin: 0;
+    overflow-x: clip;
     background: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-sans);

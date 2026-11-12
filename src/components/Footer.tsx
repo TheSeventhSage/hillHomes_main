@@ -30,6 +30,9 @@ export function Footer() {
               <TLink to="/properties" className={BIG}>
                 Properties
               </TLink>
+              <TLink to="/gallery" className={BIG}>
+                Gallery
+              </TLink>
               <TLink to="/about" className={BIG}>
                 About Hills
               </TLink>

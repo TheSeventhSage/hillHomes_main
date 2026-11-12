@@ -46,7 +46,7 @@ export function Root() {
         Skip to content
       </a>
       <Header />
-      <main id="main" className="relative z-10 bg-canvas">
+      <main id="main" className="relative z-10 overflow-x-clip bg-canvas">
         <Outlet />
       </main>
       <Footer />

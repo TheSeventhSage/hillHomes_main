@@ -6,6 +6,7 @@ import { Practice } from '@/sections/Practice';
 import { Selection } from '@/sections/Selection';
 import { Routes } from '@/sections/Routes';
 import { Values } from '@/sections/Values';
+import { Marquee } from '@/sections/Marquee';
 
 export function Home() {
   const root = useRef<HTMLDivElement>(null);
@@ -15,6 +16,7 @@ export function Home() {
       <Showcase />
       <Statement />
       <Selection />
+      <Marquee />
       <Practice />
       <Routes />
       <Values />

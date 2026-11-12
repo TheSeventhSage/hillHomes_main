@@ -6,6 +6,7 @@ import { Portal } from '@/pages/Portal';
 import { Service } from '@/pages/Service';
 import { About } from '@/pages/About';
 import { Contact } from '@/pages/Contact';
+import { Gallery } from '@/pages/Gallery';
 import { NotFound } from '@/pages/NotFound';
 
 export const router = createBrowserRouter([
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
       { path: 'investment', element: <Service path="/investment" /> },
       { path: 'advisory', element: <Service path="/advisory" /> },
       { path: 'about', element: <About /> },
+      { path: 'gallery', element: <Gallery /> },
       { path: 'contact', element: <Contact /> },
       { path: '*', element: <NotFound /> },
     ],

@@ -133,6 +133,8 @@ export const hero = {
   statement:
     'Hills Apartments and Homes brings residences, land and development together with the management and advice that follow a property through its life.',
   image: '/pictures/house.webp',
+  video: '/video/hero.mp4',
+  poster: '/video/hero-poster.jpg',
 } as const;
 
 export const offerings = [
@@ -175,6 +177,19 @@ export const gallery = [
   { src: '/pictures/bath.webp', caption: 'Bathrooms' },
 ] as const;
 
+export const plates = [
+  { src: '/pictures/villa.webp', caption: 'The residence' },
+  { src: '/pictures/interior.webp', caption: 'Living room' },
+  { src: '/pictures/entrance.webp', caption: 'Entrance court' },
+  { src: '/pictures/bedroom.webp', caption: 'Bedroom' },
+  { src: '/pictures/house.webp', caption: 'Garden side' },
+  { src: '/pictures/bath.webp', caption: 'Bathroom' },
+  { src: '/pictures/apartments.webp', caption: 'Apartments' },
+  { src: '/pictures/tropical.webp', caption: 'Courtyard' },
+  { src: '/pictures/land.webp', caption: 'Open land' },
+  { src: '/pictures/commercial.webp', caption: 'Commercial' },
+] as const;
+
 export const menu = [
   { path: '/properties', label: 'Properties' },
   { path: '/land', label: 'Land' },
@@ -182,6 +197,7 @@ export const menu = [
   { path: '/property-management', label: 'Property Management' },
   { path: '/investment', label: 'Investment' },
   { path: '/advisory', label: 'Advisory' },
+  { path: '/gallery', label: 'Gallery' },
   { path: '/about', label: 'About Hills' },
   { path: '/contact', label: 'Contact' },
 ] as const;
@@ -191,6 +207,7 @@ const known: Record<string, { label: string; image?: string }> = {
   '/properties': { label: 'Properties', image: '/pictures/apartments.webp' },
   '/about': { label: 'About Hills', image: '/pictures/house.webp' },
   '/contact': { label: 'Contact', image: '/pictures/entrance.webp' },
+  '/gallery': { label: 'Gallery', image: '/pictures/villa.webp' },
   ...Object.fromEntries(portals.map((p) => [p.path, { label: p.label, image: p.image }])),
   ...Object.fromEntries(services.map((s) => [s.path, { label: s.label, image: s.image }])),
 };
@@ -226,6 +243,7 @@ export const menuGroups: { label: string; items: MenuItem[] }[] = [
     label: 'Hills',
     items: [
       { path: '/about', label: 'About Hills', description: 'Who we are and how we approach real estate.', image: '/pictures/interior.webp' },
+      { path: '/gallery', label: 'Gallery', description: 'Ten representative pictures, one plate at a time.', image: '/pictures/bedroom.webp' },
       { path: '/contact', label: 'Contact', description: 'Arrange a viewing, ask a question or request a consultation.', image: '/pictures/entrance.webp' },
     ],
   },
@@ -233,4 +251,4 @@ export const menuGroups: { label: string; items: MenuItem[] }[] = [
 
 export const routes: MenuItem[] = [menuGroups[0]!.items[0]!, portalItem('land'), portalItem('developments'), ...serviceItems];
 
-export const preloaderImages = ['/pictures/interior.webp', '/pictures/entrance.webp', hero.image] as const;
+export const preloaderImages = ['/pictures/house.webp', '/pictures/entrance.webp', hero.poster] as const;
