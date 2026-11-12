@@ -8,7 +8,7 @@ export interface Env {
 }
 
 /** Runs build once the page is uncovered, only when motion is allowed, and reverts it on leave. */
-export function useMotion(scope: RefObject<HTMLElement | null>, build: (env: Env) => void) {
+export function useMotion(scope: RefObject<HTMLElement | null>, build: (env: Env) => void | (() => void)) {
   const latest = useRef(build);
   latest.current = build;
   useLayoutEffect(() => {
@@ -17,7 +17,7 @@ export function useMotion(scope: RefObject<HTMLElement | null>, build: (env: Env
       mm = gsap.matchMedia(scope.current ?? undefined);
       mm.add({ ok: '(prefers-reduced-motion: no-preference)', wide: '(min-width: 900px)' }, (ctx) => {
         const c = ctx.conditions as { ok: boolean; wide: boolean };
-        if (c.ok) latest.current({ pinned: c.wide });
+        return c.ok ? latest.current({ pinned: c.wide }) : undefined;
       });
     });
     return () => {

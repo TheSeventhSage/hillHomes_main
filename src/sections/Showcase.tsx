@@ -74,6 +74,15 @@ export function Showcase() {
     state.tween = tween;
     render(tween.progress());
     trigger.current = tween.scrollTrigger ?? null;
+    return () => {
+      trigger.current = null;
+      blocks.forEach((b) => b?.style.removeProperty('height'));
+      pics.forEach((p) => p?.style.removeProperty('transform'));
+      [...copies, shade, heroCopy].forEach((n) => {
+        n?.style.removeProperty('opacity');
+        n?.style.removeProperty('visibility');
+      });
+    };
   });
 
   const explore = () => {
@@ -89,7 +98,7 @@ export function Showcase() {
     <section ref={root} data-dark="" aria-label="Hills Apartments and Homes" className="relative bg-night pinned:h-svh pinned:overflow-hidden pinned:bg-canvas">
       <div className="relative h-svh w-full overflow-hidden pinned:absolute pinned:inset-y-0 pinned:left-0 pinned:w-[86vw]">
         <video
-          className="absolute inset-0 size-full object-cover"
+          className="absolute inset-0 size-full object-cover object-[12%_center] pinned:object-center"
           src={hero.video}
           poster={hero.poster}
           autoPlay={motionOk()}
@@ -97,7 +106,7 @@ export function Showcase() {
           loop
           playsInline
           preload="auto"
-          aria-label="A quiet, sunlit bedroom, representative footage"
+          aria-label="A building under construction at sunset, representative footage"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/35 to-night/55" />
         <div data-shade="" className="absolute inset-0 bg-night opacity-0" />
