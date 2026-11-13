@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap, ScrollTrigger, motionOk } from '@/motion/gsap';
 import { useMotion } from '@/motion/useMotion';
 import { smooth } from '@/motion/smooth';
 import { TLink } from '@/motion/transition';
-import { hero, portals } from '@/data/site';
-import { ArrowIcon, PlusIcon } from '@/components/Icons';
+import { hero, HERO_VEIL, portals } from '@/data/site';
+import { reveal } from '@/motion/gate';
+import { ArrowDownIcon, ArrowIcon } from '@/components/Icons';
 
 const HERO_VW = 86;
 const CARD_VW = 53.5;
@@ -18,6 +19,15 @@ const easeOut = gsap.parseEase('power2.out');
 export function Showcase() {
   const root = useRef<HTMLElement>(null);
   const trigger = useRef<ScrollTrigger | null>(null);
+  const video = useRef<HTMLVideoElement>(null);
+
+  useEffect(
+    () =>
+      reveal.then(() => {
+        if (motionOk()) void video.current?.play().catch(() => {});
+      }),
+    [],
+  );
 
   useMotion(root, ({ pinned }) => {
     const el = root.current;
@@ -69,7 +79,7 @@ export function Showcase() {
       x: () => -travel(),
       ease: 'none',
       onUpdate: () => render(state.tween?.progress() ?? 0),
-      scrollTrigger: { trigger: el, start: 'top top', end: () => `+=${travel()}`, pin: true, scrub: 0.9, invalidateOnRefresh: true },
+      scrollTrigger: { trigger: el, start: 'top top', end: () => `+=${travel()}`, pin: true, scrub: true, invalidateOnRefresh: true },
     });
     state.tween = tween;
     render(tween.progress());
@@ -98,28 +108,22 @@ export function Showcase() {
     <section ref={root} data-dark="" aria-label="Hills Apartments and Homes" className="relative bg-night pinned:h-svh pinned:overflow-hidden pinned:bg-canvas">
       <div className="relative h-svh w-full overflow-hidden pinned:absolute pinned:inset-y-0 pinned:left-0 pinned:w-[86vw]">
         <video
+          ref={video}
           className="absolute inset-0 size-full object-cover object-[12%_center] pinned:object-center"
           src={hero.video}
           poster={hero.poster}
-          autoPlay={motionOk()}
           muted
           loop
           playsInline
           preload="auto"
           aria-label="A building under construction at sunset, representative footage"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/35 to-night/55" />
+        <div className={`absolute inset-0 ${HERO_VEIL}`} />
         <div data-shade="" className="absolute inset-0 bg-night opacity-0" />
         <div data-hero-copy="" className="absolute inset-0 text-white">
           <div className="absolute inset-x-[max(1.25rem,3.5vw)] top-1/2 hidden -translate-y-1/2 items-center text-sm font-medium pinned:flex">
             <span className="w-[22vw]">{hero.eyebrow}</span>
             <span>Founded in Abuja, 2021</span>
-            <button type="button" onClick={explore} className="ml-auto inline-flex min-h-11 items-center gap-3 text-sm font-medium text-white">
-              Scroll to explore
-              <span data-magnet="" className="grid size-8 place-items-center rounded-full border border-white/70 transition-colors duration-300 hover:bg-white hover:text-ink">
-                <ArrowIcon width={14} height={14} />
-              </span>
-            </button>
           </div>
           <div className="absolute inset-x-0 bottom-0 px-[max(1.25rem,3.5vw)] pb-[7svh]">
             <h1 data-lines="" className="m-0 font-display text-[clamp(3.4rem,8.4vw,9.5rem)] font-normal leading-[0.9] tracking-[-0.02em]">
@@ -134,8 +138,16 @@ export function Showcase() {
             <span>{hero.eyebrow}</span>
             <span>Founded in Abuja, 2021</span>
           </div>
-          <button type="button" onClick={explore} className="absolute bottom-[2.2svh] left-[max(1.25rem,3.5vw)] inline-flex min-h-9 items-center gap-2 text-[0.8rem] font-medium text-white/90 underline decoration-gold underline-offset-4 pinned:hidden">
-            Swipe up to explore
+          <button
+            type="button"
+            onClick={explore}
+            className="group absolute bottom-[7svh] right-[max(1.25rem,3.5vw)] inline-flex items-center gap-4 text-sm font-medium text-white"
+          >
+            <span className="hidden min-[520px]:inline">Scroll to explore</span>
+            <span className="sr-only min-[520px]:hidden">Scroll to explore</span>
+            <span data-magnet="" className="grid size-12 place-items-center rounded-full border border-white/70 bg-white/10 backdrop-blur-sm transition-colors duration-300 group-hover:bg-white group-hover:text-ink">
+              <ArrowDownIcon width={16} height={16} className="motion-safe:animate-nudge" />
+            </span>
           </button>
         </div>
       </div>
@@ -154,14 +166,13 @@ export function Showcase() {
                     <span className="order-1 font-display text-[clamp(2.4rem,11vw,3.4rem)] leading-none pinned:hidden">{p.kicker}</span>
                     <ul className="order-2 m-0 grid list-none gap-y-2.5 self-stretch p-0 text-[0.8rem] pinned:order-none pinned:hidden pinned:grid-cols-2 pinned:gap-x-6 pinned:gap-y-2 pinned:self-start pinned:text-xs pinned:min-[1100px]:grid">
                       {p.points.map((pt) => (
-                        <li key={pt.label} className="flex items-center justify-between gap-3 border-b border-white/35 pb-1.5">
+                        <li key={pt.label} className="border-b border-white/35 pb-1.5">
                           {pt.label}
-                          <ArrowIcon width={11} height={11} />
                         </li>
                       ))}
                     </ul>
-                    <span data-magnet="" className="col-start-2 row-start-1 hidden size-11 place-items-center justify-self-end rounded-full border border-white/70 transition-colors duration-300 group-hover:bg-white group-hover:text-ink pinned:grid">
-                      <PlusIcon />
+                    <span data-magnet="" className="col-start-2 row-start-1 hidden min-h-11 items-center gap-2.5 justify-self-end whitespace-nowrap rounded-full border border-white/70 px-4 text-xs font-semibold transition-colors duration-300 group-hover:bg-white group-hover:text-ink pinned:inline-flex">
+                      {p.cta} <ArrowIcon width={13} height={13} />
                     </span>
                     <span className="col-start-1 row-start-2 hidden content-end gap-2 pinned:grid">
                       <span className="font-display text-[clamp(2.2rem,3.9vw,4.4rem)] leading-none">{p.kicker}</span>
@@ -173,12 +184,11 @@ export function Showcase() {
                       {p.line}
                       <span className="flex items-center justify-between text-xs tracking-widest pinned:hidden">
                         {i + 1}/{portals.length}
-                        <span className="grid size-9 place-items-center rounded-full border border-white/70">
-                          <PlusIcon width={14} height={14} />
+                        <span className="inline-flex min-h-9 items-center gap-2 rounded-full border border-white/70 px-3 font-semibold tracking-normal">
+                          {p.cta} <ArrowIcon width={12} height={12} />
                         </span>
                       </span>
                     </span>
-                    <span className="sr-only">{p.label}</span>
                   </div>
                 </TLink>
               </div>

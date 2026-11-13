@@ -36,7 +36,7 @@ export function Statement() {
               {hero.statement}
             </p>
             <TLink data-fade="" to="/about" className="group mt-8 inline-flex min-h-11 items-center gap-3 text-sm font-medium text-ink no-underline">
-              More about us
+              About Hills
               <span data-magnet="" className="grid size-8 place-items-center rounded-full border border-ink/40 transition-colors duration-300 group-hover:bg-ink group-hover:text-canvas">
                 <ArrowIcon width={14} height={14} />
               </span>

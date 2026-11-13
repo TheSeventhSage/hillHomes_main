@@ -17,18 +17,18 @@ export function Footer() {
           <img src="/pictures/interior.webp" alt="" loading="lazy" className="absolute inset-0 size-full object-cover" />
           <div className="absolute inset-0 bg-night/70" />
           <div className="relative mx-auto grid max-w-[96rem] gap-12 min-[900px]:grid-cols-[1.3fr_1fr_auto]">
-            <nav aria-label="Our focus">
-              <p className={HEAD}>Our focus</p>
+            <nav aria-label="Find a property">
+              <p className={HEAD}>Find a property</p>
               {portals.map((p) => (
                 <TLink key={p.path} to={p.path} className={BIG}>
                   {p.kicker}
                 </TLink>
               ))}
             </nav>
-            <nav aria-label="Explore">
-              <p className={HEAD}>Explore</p>
+            <nav aria-label="The company">
+              <p className={HEAD}>The company</p>
               <TLink to="/properties" className={BIG}>
-                Properties
+                All listings
               </TLink>
               <TLink to="/gallery" className={BIG}>
                 Gallery
@@ -41,7 +41,7 @@ export function Footer() {
               to="/contact"
               className="inline-flex min-h-12 items-center gap-3 self-start rounded-full border border-canvas/50 px-6 text-sm text-canvas no-underline transition-colors duration-300 hover:border-gold hover:text-gold"
             >
-              Speak to an adviser <ArrowIcon />
+              Book a viewing or ask a question <ArrowIcon />
             </TLink>
           </div>
         </div>

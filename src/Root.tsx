@@ -7,6 +7,8 @@ import { Preloader } from '@/components/Preloader';
 import { Cursor } from '@/motion/Cursor';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { ListingDrawer } from '@/listings/ListingDrawer';
+import { FeedbackHost } from '@/ui/feedback';
 
 /** Smooth scroll, the transition cover, the header and the footer around every page. */
 export function Root() {
@@ -29,6 +31,7 @@ export function Root() {
           return r.top <= 36 && r.bottom >= 36;
         });
       root.toggleAttribute('data-header-dark', dark);
+      root.toggleAttribute('data-scrolled', window.scrollY > 24 && !dark);
     };
     update();
     window.addEventListener('scroll', update, { passive: true });
@@ -50,6 +53,8 @@ export function Root() {
         <Outlet />
       </main>
       <Footer />
+      <ListingDrawer />
+      <FeedbackHost />
       <Cursor />
       <Preloader />
     </TransitionProvider>

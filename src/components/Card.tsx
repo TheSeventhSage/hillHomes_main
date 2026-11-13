@@ -18,7 +18,7 @@ export function Card({ item, ratio = 'aspect-[5/4]', big, notch, light, classNam
   return (
     <TLink to={item.path} data-cursor="View" className={`group block no-underline ${light ? 'text-canvas' : 'text-ink'} ${className}`}>
       <div className={notch ? NOTCH : ''}>
-        <div data-clip="" className={`relative overflow-hidden ${light ? 'bg-canvas/10' : 'bg-ink/10'} ${ratio}`}>
+        <div data-clip="" className={`relative overflow-hidden rounded-[1.1rem] ${light ? 'bg-canvas/10' : 'bg-ink/10'} ${ratio}`}>
           <img
             data-grow=""
             src={item.image}

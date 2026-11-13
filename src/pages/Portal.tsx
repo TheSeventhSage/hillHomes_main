@@ -1,8 +1,12 @@
 import { useRef } from 'react';
 import { usePageMotion } from '@/motion/page';
+import { TLink } from '@/motion/transition';
 import { PageHero } from '@/components/PageHero';
 import { NextLink } from '@/components/NextLink';
+import { ArrowIcon } from '@/components/Icons';
 import { portals } from '@/data/site';
+import { listingsFor, SAMPLE_NOTE } from '@/listings/data';
+import { ListingGrid } from '@/listings/ListingCard';
 
 export function Portal({ id }: { id: string }) {
   const root = useRef<HTMLDivElement>(null);
@@ -36,6 +40,23 @@ export function Portal({ id }: { id: string }) {
               <li className="border-t border-line" />
             </ul>
           </div>
+        </div>
+      </section>
+      <section id="listings" className="bg-paper px-[max(1.25rem,3.5vw)] py-24">
+        <div className="mx-auto max-w-[96rem]">
+          <header className="mb-12 flex flex-wrap items-end justify-between gap-6 border-b border-line pb-5">
+            <h2 data-lines="" className="m-0 font-display text-[clamp(2rem,3.6vw,3.4rem)] font-normal leading-none">
+              {portal.label} to view
+            </h2>
+            <TLink data-fade="" to="/properties" className="group inline-flex min-h-11 items-center gap-3 text-sm font-medium text-ink no-underline">
+              All listings
+              <span data-magnet="" className="grid size-8 place-items-center rounded-full border border-ink/40 transition-colors duration-300 group-hover:bg-ink group-hover:text-canvas">
+                <ArrowIcon width={14} height={14} />
+              </span>
+            </TLink>
+          </header>
+          <ListingGrid items={listingsFor(portal.id)} />
+          <p className="mb-0 mt-12 max-w-[70ch] text-sm leading-relaxed text-ink-2">{SAMPLE_NOTE}</p>
         </div>
       </section>
       <NextLink to={next.path} image={next.image} label={next.label} />

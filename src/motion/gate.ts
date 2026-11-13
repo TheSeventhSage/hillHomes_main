@@ -26,3 +26,24 @@ export function whenOpen(fn: () => void): () => void {
   waiters.add(fn);
   return () => void waiters.delete(fn);
 }
+
+let shown = false;
+const viewers = new Set<() => void>();
+
+/** Fires once the first screen is actually visible. */
+export const reveal = {
+  done() {
+    shown = true;
+    const run = [...viewers];
+    viewers.clear();
+    run.forEach((fn) => fn());
+  },
+  then(fn: () => void): () => void {
+    if (shown) {
+      fn();
+      return () => {};
+    }
+    viewers.add(fn);
+    return () => void viewers.delete(fn);
+  },
+};

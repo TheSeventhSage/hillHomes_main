@@ -2,6 +2,7 @@ import Lenis from 'lenis';
 import { gsap, ScrollTrigger, motionOk } from '@/motion/gsap';
 
 let lenis: Lenis | null = null;
+let locks = 0;
 
 /** Smooth scroll for capable devices; native scroll otherwise. */
 export function startSmooth(): () => void {
@@ -30,5 +31,18 @@ export const smooth = {
     window.scrollTo(0, 0);
   },
   stop: () => lenis?.stop(),
-  start: () => lenis?.start(),
+  start: () => {
+    if (locks === 0) lenis?.start();
+  },
+  lock() {
+    locks += 1;
+    document.documentElement.toggleAttribute('data-locked', true);
+    lenis?.stop();
+  },
+  unlock() {
+    locks = Math.max(0, locks - 1);
+    if (locks > 0) return;
+    document.documentElement.removeAttribute('data-locked');
+    lenis?.start();
+  },
 };

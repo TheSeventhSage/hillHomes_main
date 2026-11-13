@@ -43,11 +43,14 @@ export function Cursor() {
       el.removeAttribute('data-on');
       rest();
     };
+    const press = () => el.removeAttribute('data-on');
     window.addEventListener('pointermove', move, { passive: true });
+    window.addEventListener('pointerdown', press, { passive: true });
     document.addEventListener('pointerleave', leave);
     window.addEventListener('blur', leave);
     return () => {
       window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerdown', press);
       document.removeEventListener('pointerleave', leave);
       window.removeEventListener('blur', leave);
     };

@@ -1,10 +1,9 @@
 import { TLink } from '@/motion/transition';
-import { menuGroups, portals, type MenuItem } from '@/data/site';
+import { allListings, portals, type MenuItem } from '@/data/site';
 import { ArrowIcon } from '@/components/Icons';
 import { Card } from '@/components/Card';
 
-const all: MenuItem = menuGroups[0]!.items[0]!;
-const cards: MenuItem[] = [...portals.map((p) => ({ path: p.path, label: p.label, description: p.line, image: p.image })), { ...all, image: '/pictures/bedroom.webp' }];
+const cards: MenuItem[] = [...portals.map((p) => ({ path: p.path, label: p.label, description: p.summary, image: p.image })), { ...allListings, image: '/pictures/bedroom.webp' }];
 
 /** The places in an uneven grid: one large picture beside two small, then mirrored. */
 export function Selection() {
@@ -15,10 +14,10 @@ export function Selection() {
       <div className="mx-auto max-w-[96rem]">
         <header className="mb-10 flex flex-wrap items-end justify-between gap-4 border-b border-line pb-5">
           <h2 data-lines="" className="m-0 font-display text-[clamp(2rem,3.6vw,3.4rem)] font-normal leading-none">
-            A selection of what we offer
+            Find a property
           </h2>
           <TLink data-fade="" to="/properties" className="group inline-flex min-h-11 items-center gap-3 text-sm font-medium text-ink no-underline">
-            All properties
+            See all listings
             <span data-magnet="" className="grid size-8 place-items-center rounded-full border border-ink/40 transition-colors duration-300 group-hover:bg-ink group-hover:text-canvas">
               <ArrowIcon width={14} height={14} />
             </span>

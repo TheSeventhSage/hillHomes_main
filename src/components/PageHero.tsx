@@ -17,7 +17,7 @@ export function PageHero({ image, alt, kicker, title, line }: Props) {
       <div className="absolute inset-x-0 bottom-0 grid gap-6 px-[max(1.25rem,3.5vw)] pb-[8svh] text-white min-[900px]:grid-cols-[1fr_auto] min-[900px]:items-end">
         <div>
           <p className="m-0 mb-6 text-sm font-medium">{kicker}</p>
-          <h1 data-lines="" className="m-0 max-w-[12ch] font-display text-[clamp(3.2rem,9vw,9.5rem)] font-normal leading-[0.92] tracking-[-0.02em]">
+          <h1 data-lines="" className="m-0 max-w-[13ch] font-display text-[clamp(3rem,8vw,8.5rem)] font-normal leading-[1] tracking-[-0.02em]">
             {title}
           </h1>
         </div>

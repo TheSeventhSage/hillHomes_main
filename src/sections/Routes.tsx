@@ -21,7 +21,7 @@ export function Routes() {
     <section ref={root} onPointerMove={follow} onPointerLeave={() => setActive(null)} className="relative px-[max(1.25rem,3.5vw)] py-28">
       <div className="mx-auto max-w-[96rem]">
         <h2 data-lines="" className="m-0 mb-8 font-display text-[clamp(2rem,3.6vw,3.4rem)] font-normal leading-none">
-          Where to next
+          Where would you like to go?
         </h2>
         <ul className="m-0 list-none border-t border-line p-0">
           {routes.map((r, i) => (

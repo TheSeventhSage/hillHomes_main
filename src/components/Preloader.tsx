@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap, motionOk } from '@/motion/gsap';
-import { gate } from '@/motion/gate';
+import { gate, reveal } from '@/motion/gate';
 import { smooth } from '@/motion/smooth';
-import { hero, preloaderImages } from '@/data/site';
+import { hero, HERO_VEIL, preloaderImages } from '@/data/site';
 
 const HALF_X = 92;
 const HALF_Y = 44;
@@ -30,7 +30,9 @@ export function Preloader() {
   const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (gone) gate.release();
+    if (!gone) return;
+    gate.release();
+    reveal.done();
   }, [gone]);
 
   useLayoutEffect(() => {
@@ -69,6 +71,7 @@ export function Preloader() {
       tl.to(mark, { opacity: 0, duration: 0.7, ease: 'power1.inOut' }, end - 1.3)
         .to(shade, { opacity: 1, duration: 1.2, ease: 'power1.inOut' }, end - 1.5)
         .fromTo(lines, { yPercent: 110 }, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: 0.14 }, end - 1.1)
+        .add(() => reveal.done(), end + 0.45)
         .to(el, { opacity: 0, duration: 1.3, ease: 'power2.inOut' }, end + 0.45);
     });
     return () => {
@@ -80,12 +83,16 @@ export function Preloader() {
   if (gone) return null;
   return (
     <div ref={root} role="status" aria-label="Loading" className="fixed inset-0 z-[100] overflow-hidden bg-night">
-      {preloaderImages.map((src) => (
+      {preloaderImages.map((src, i) => (
         <div key={src} data-frame="" className="invisible absolute inset-0 overflow-hidden">
-          <img src={src} alt="" className="absolute inset-0 size-full object-cover" />
+          <img
+            src={src}
+            alt=""
+            className={`absolute inset-y-0 left-0 h-full w-full object-cover ${i === preloaderImages.length - 1 ? 'object-[12%_center] pinned:w-[86vw] pinned:object-center' : ''}`}
+          />
         </div>
       ))}
-      <div data-shade="" className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/35 to-night/55 opacity-0" />
+      <div data-shade="" className={`absolute inset-0 opacity-0 pinned:w-[86vw] ${HERO_VEIL}`} />
       <p aria-hidden="true" className="absolute inset-x-0 bottom-0 m-0 px-[max(1.25rem,3.5vw)] pb-[7svh] font-display text-[clamp(3.4rem,8.4vw,9.5rem)] leading-[0.9] tracking-[-0.02em] text-white">
         {hero.lines.map((l, i) => (
           <span key={l} className="block overflow-hidden pb-[0.08em]">
